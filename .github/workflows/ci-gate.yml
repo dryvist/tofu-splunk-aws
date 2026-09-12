@@ -34,8 +34,15 @@ jobs:
       actions: write
     uses: dryvist/.github/.github/workflows/_ci-gate.yml@main
     with:
-      markdown_lint: true
+      tofu_ci: true
       filters: |
         markdown:
           - '**.md'
           - '.markdownlint*'
+        terraform:
+          - '**.tf'
+          - '**.tofu'
+          - '**.tfvars'
+          - '**.tftest.hcl'
+          - '.terraform.lock.hcl'
+          - '.tflint.hcl'

@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/dryvist/tofu-splunk-aws/compare/v2.0.1...v2.0.2) (2026-09-15)
+
+
+### Bug Fixes
+
+* **vars:** split variables.tf under the 12KB file-size gate ([#261](https://github.com/dryvist/tofu-splunk-aws/issues/261)) ([395acdd](https://github.com/dryvist/tofu-splunk-aws/commit/395acdda34645190b028ffd731692a913c643bf8))
+
 ## [2.0.1](https://github.com/dryvist/tf-splunk-aws/compare/v2.0.0...v2.0.1) (2026-07-09)
 
 

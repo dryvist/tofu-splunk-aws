@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/dryvist/tofu-splunk-aws/compare/v2.0.2...v2.0.3) (2026-10-10)
+
+
+### Bug Fixes
+
+* **ci:** resolve actionlint findings in workflow scripts ([#273](https://github.com/dryvist/tofu-splunk-aws/issues/273)) ([982108f](https://github.com/dryvist/tofu-splunk-aws/commit/982108fdc725fbfb2015813d8870cee9ba1ec06e))
+
 ## [2.0.2](https://github.com/dryvist/tofu-splunk-aws/compare/v2.0.1...v2.0.2) (2026-09-15)
 
 

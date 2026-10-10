@@ -53,23 +53,26 @@ jobs:
 
           # NAT first: private-subnet instances need their egress path up
           # before they boot and reach for packages/AWS APIs.
-          nat_ids=$(aws ec2 describe-instances \
+          nat_ids_text=$(aws ec2 describe-instances \
             --filters "Name=tag:Project,Values=${PROJECT_TAG}" "Name=tag:Role,Values=nat" "Name=instance-state-name,Values=stopped" \
             --query 'Reservations[].Instances[].InstanceId' --output text)
-          if [ -n "$nat_ids" ]; then
-            aws ec2 start-instances --instance-ids $nat_ids
-            aws ec2 wait instance-running --instance-ids $nat_ids
+          readarray -t nat_ids < <(printf '%s\n' "$nat_ids_text" | tr '[:space:]' '\n' | sed '/^$/d')
+          if [ "${#nat_ids[@]}" -gt 0 ]; then
+            aws ec2 start-instances --instance-ids "${nat_ids[@]}"
+            aws ec2 wait instance-running --instance-ids "${nat_ids[@]}"
           fi
 
-          other_ids=$(aws ec2 describe-instances \
+          other_instances_query=$(printf '%s' "Reservations[].Instances[?!(Tags[?Key==\`Role\` && Value==\`nat\`])][].InstanceId")
+          other_ids_text=$(aws ec2 describe-instances \
             --filters "Name=tag:Project,Values=${PROJECT_TAG}" "Name=instance-state-name,Values=stopped" \
-            --query 'Reservations[].Instances[?!(Tags[?Key==`Role` && Value==`nat`])][].InstanceId' --output text)
-          if [ -n "$other_ids" ]; then
-            aws ec2 start-instances --instance-ids $other_ids
-            aws ec2 wait instance-running --instance-ids $other_ids
+            --query "$other_instances_query" --output text)
+          readarray -t other_ids < <(printf '%s\n' "$other_ids_text" | tr '[:space:]' '\n' | sed '/^$/d')
+          if [ "${#other_ids[@]}" -gt 0 ]; then
+            aws ec2 start-instances --instance-ids "${other_ids[@]}"
+            aws ec2 wait instance-running --instance-ids "${other_ids[@]}"
           fi
 
-          if [ -z "$nat_ids" ] && [ -z "$other_ids" ]; then
+          if [ -z "$nat_ids_text" ] && [ -z "$other_ids_text" ]; then
             echo "No stopped Project=${PROJECT_TAG} instances found." | tee -a "$GITHUB_STEP_SUMMARY"
           fi
 
@@ -77,12 +80,13 @@ jobs:
         if: inputs.action == 'stop'
         run: |
           set -euo pipefail
-          ids=$(aws ec2 describe-instances \
+          ids_text=$(aws ec2 describe-instances \
             --filters "Name=tag:Project,Values=${PROJECT_TAG}" "Name=instance-state-name,Values=running" \
             --query 'Reservations[].Instances[].InstanceId' --output text)
-          if [ -n "$ids" ]; then
-            aws ec2 stop-instances --instance-ids $ids
-            echo "Stopping: $ids" >> "$GITHUB_STEP_SUMMARY"
+          readarray -t ids < <(printf '%s\n' "$ids_text" | tr '[:space:]' '\n' | sed '/^$/d')
+          if [ "${#ids[@]}" -gt 0 ]; then
+            aws ec2 stop-instances --instance-ids "${ids[@]}"
+            echo "Stopping: $ids_text" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "No running Project=${PROJECT_TAG} instances found." >> "$GITHUB_STEP_SUMMARY"
           fi
@@ -97,8 +101,10 @@ jobs:
             echo ""
             echo "| Instance | State | Public IP | Private IP |"
             echo "| --- | --- | --- | --- |"
+            instance_status_query=$(printf '%s' "Reservations[].Instances[].[Tags[?Key==\`Name\`]|[0].Value, State.Name, PublicIpAddress, PrivateIpAddress]")
+            awk_program=$(printf '%s' "{printf \"| %s | %s | %s | %s |\\n\", \$1, \$2, \$3, \$4}")
             aws ec2 describe-instances \
               --filters "Name=tag:Project,Values=${PROJECT_TAG}" \
-              --query 'Reservations[].Instances[].[Tags[?Key==`Name`]|[0].Value, State.Name, PublicIpAddress, PrivateIpAddress]' \
-              --output text | awk '{printf "| %s | %s | %s | %s |\n", $1, $2, $3, $4}'
+              --query "$instance_status_query" \
+              --output text | awk "$awk_program"
           } >> "$GITHUB_STEP_SUMMARY"

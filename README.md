@@ -30,7 +30,7 @@ for the live computed figure):
 
 | Component | Running | Stopped |
 | --------- | ------- | ------- |
-| NAT instance (t4g.nano) | ~$3.07/mo | $0 |
+| NAT instance (t4g.nano) | ~$3.07/mo | ~$0.64/mo (EBS) |
 | Splunk (t3a.small + 70 GB gp3) | ~$19.32/mo | ~$5.60/mo (EBS) |
 | Cribl Stream (t3a.small) | ~$16.12/mo | ~$2.40/mo (EBS) |
 | Cribl Edge (t3a.medium, Windows) | ~$56.71/mo | ~$2.40/mo (EBS) |

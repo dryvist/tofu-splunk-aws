@@ -6,6 +6,13 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - "**.tf"
+      - "**.tofu"
+      - "**.tfvars"
+      - "**.tftest.hcl"
+      - ".terraform.lock.hcl"
+      - ".github/workflows/tofu-ci.yml"
 
 permissions:
   contents: read

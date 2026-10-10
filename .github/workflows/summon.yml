@@ -57,16 +57,18 @@ jobs:
             --filters "Name=tag:Project,Values=${PROJECT_TAG}" "Name=tag:Role,Values=nat" "Name=instance-state-name,Values=stopped" \
             --query 'Reservations[].Instances[].InstanceId' --output text)
           if [ -n "$nat_ids" ]; then
-            aws ec2 start-instances --instance-ids $nat_ids
-            aws ec2 wait instance-running --instance-ids $nat_ids
+            read -r -a nat_id_list <<< "$nat_ids"
+            aws ec2 start-instances --instance-ids "${nat_id_list[@]}"
+            aws ec2 wait instance-running --instance-ids "${nat_id_list[@]}"
           fi
 
           other_ids=$(aws ec2 describe-instances \
             --filters "Name=tag:Project,Values=${PROJECT_TAG}" "Name=instance-state-name,Values=stopped" \
-            --query 'Reservations[].Instances[?!(Tags[?Key==`Role` && Value==`nat`])][].InstanceId' --output text)
+            --query "Reservations[].Instances[?!(Tags[?Key=='Role' && Value=='nat'])][].InstanceId" --output text)
           if [ -n "$other_ids" ]; then
-            aws ec2 start-instances --instance-ids $other_ids
-            aws ec2 wait instance-running --instance-ids $other_ids
+            read -r -a other_id_list <<< "$other_ids"
+            aws ec2 start-instances --instance-ids "${other_id_list[@]}"
+            aws ec2 wait instance-running --instance-ids "${other_id_list[@]}"
           fi
 
           if [ -z "$nat_ids" ] && [ -z "$other_ids" ]; then
@@ -81,7 +83,8 @@ jobs:
             --filters "Name=tag:Project,Values=${PROJECT_TAG}" "Name=instance-state-name,Values=running" \
             --query 'Reservations[].Instances[].InstanceId' --output text)
           if [ -n "$ids" ]; then
-            aws ec2 stop-instances --instance-ids $ids
+            read -r -a id_list <<< "$ids"
+            aws ec2 stop-instances --instance-ids "${id_list[@]}"
             echo "Stopping: $ids" >> "$GITHUB_STEP_SUMMARY"
           else
             echo "No running Project=${PROJECT_TAG} instances found." >> "$GITHUB_STEP_SUMMARY"
@@ -99,6 +102,6 @@ jobs:
             echo "| --- | --- | --- | --- |"
             aws ec2 describe-instances \
               --filters "Name=tag:Project,Values=${PROJECT_TAG}" \
-              --query 'Reservations[].Instances[].[Tags[?Key==`Name`]|[0].Value, State.Name, PublicIpAddress, PrivateIpAddress]' \
+              --query "Reservations[].Instances[].[Tags[?Key=='Name']|[0].Value, State.Name, PublicIpAddress, PrivateIpAddress]" \
               --output text | awk '{printf "| %s | %s | %s | %s |\n", $1, $2, $3, $4}'
           } >> "$GITHUB_STEP_SUMMARY"

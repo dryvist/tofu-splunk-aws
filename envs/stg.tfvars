@@ -6,4 +6,4 @@ environment = "stg"
 enable_splunk = true
 enable_cribl  = false
 
-enable_auto_stop = true
+enable_auto_stop = false

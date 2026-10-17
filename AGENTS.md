@@ -1,19 +1,18 @@
-# tf-splunk-aws
+# tofu-splunk-aws
 
-AWS Splunk/Cribl data-ingest infrastructure managed with OpenTofu (no
+AWS Splunk Enterprise data-ingest infrastructure managed with OpenTofu (no
 Terraform, no Terragrunt).
 
 ## Purpose
 
-This repo provisions a cost-optimized AWS environment for on-demand Splunk
-and/or Cribl workloads. Key constraints:
+This repo provisions a cost-optimized AWS environment for 24/7 Splunk Enterprise
+workloads. Key constraints:
 
 - Data flows **INTO** AWS only (never out — egress costs)
-- Nothing needs 24/7 uptime; the environment is summoned on demand and a
-  scheduled stop turns it off again (default nightly, caps runtime under 24h)
-- Cost sensitivity is paramount
-- Splunk and Cribl are independently optional (`enable_splunk`,
-  `enable_cribl`)
+- Runs **24/7 continuously by default**; instances remain running until stopped
+  manually via the AWS Console UI or destroyed with `tofu destroy`
+- Splunk Enterprise is the primary, production-ready workload (`enable_splunk = true`)
+- Cribl Stream & Edge are optional add-ons, disabled by default (`enable_cribl = false`)
 
 ## Architecture
 

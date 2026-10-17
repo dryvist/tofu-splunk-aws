@@ -18,8 +18,9 @@
 resource "random_password" "splunk_admin" {
   count = var.enable_splunk ? 1 : 0
 
-  length  = var.generated_password_length
-  special = true
+  length           = var.generated_password_length
+  special          = true
+  override_special = "!@#$%&*-_=+"
 }
 
 # Windows local Administrator password for the Cribl Edge instance. The

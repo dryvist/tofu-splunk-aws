@@ -1,0 +1,30 @@
+# terraform.tfvars.example
+# Copy this file to terraform.tfvars to configure your local deployment:
+#   cp terraform.tfvars.example terraform.tfvars
+
+environment = "dev"
+aws_region  = "us-east-2"
+
+# Operator egress CIDRs permitted to access Splunk Web (port 8000) and SSH.
+# Replace with your actual public IP in CIDR format (e.g. ["203.0.113.50/32"]).
+admin_ip_cidrs = ["127.0.0.1/32"]
+
+# Workload configuration (Splunk Enterprise only, 24/7 operation)
+enable_splunk = true
+enable_cribl  = false
+
+# Sizing specifications
+splunk_instance_type    = "t3a.small"
+splunk_root_volume_size = 20
+splunk_data_volume_size = 50
+
+# Network access mode:
+# - false (recommended): Instance stays in private subnets with no public IP.
+#   Access Splunk Web via AWS SSM Session Manager port forwarding.
+# - true: Assigns a public IP to Splunk and allows access from admin_ip_cidrs.
+splunk_public_access = false
+
+# Continuous 24/7 operation:
+# Defaults to false so instances run 24/7 without scheduled interruptions.
+# Stop or start instances as needed directly via the AWS Console UI.
+enable_auto_stop = false

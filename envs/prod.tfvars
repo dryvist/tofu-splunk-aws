@@ -7,4 +7,5 @@ environment = "prod"
 enable_splunk = true
 enable_cribl  = false
 
-enable_auto_stop = true
+# prod environment runs 24/7 continuous operation.
+enable_auto_stop = false

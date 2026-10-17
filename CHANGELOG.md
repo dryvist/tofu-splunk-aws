@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/dryvist/tofu-splunk-aws/compare/v2.0.3...v2.1.0) (2026-10-17)
+
+
+### Features
+
+* configure 24/7 Splunk operation, harden password, and overhaul documentation ([#294](https://github.com/dryvist/tofu-splunk-aws/issues/294)) ([ef35cdc](https://github.com/dryvist/tofu-splunk-aws/commit/ef35cdc3b15afd68b0237d5989831a620790b410))
+
 ## [2.0.3](https://github.com/dryvist/tofu-splunk-aws/compare/v2.0.2...v2.0.3) (2026-10-10)
 
 

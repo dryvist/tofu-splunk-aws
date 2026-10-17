@@ -44,9 +44,9 @@ variable "enable_cribl" {
 }
 
 variable "enable_auto_stop" {
-  description = "Stop every Project-tagged instance on stop_schedule_expression via the AWS-StopEC2Instance runbook. On by default — this is the primary cost control. A daily schedule caps runtime at under 24 hours."
+  description = "Stop every Project-tagged instance on stop_schedule_expression via the AWS-StopEC2Instance runbook. Defaults to false for 24/7 continuous operation. When false, instances remain running until stopped manually via the AWS Console UI."
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "stop_schedule_expression" {

@@ -34,7 +34,9 @@ locals {
     /sbin/iptables -F FORWARD
     /sbin/iptables -A FORWARD -j ACCEPT
 
-    # Save iptables rules
+    # Install iptables-services and save rules for durability across reboots
+    yum install -y iptables-services
+    systemctl enable iptables
     service iptables save
 
     # Install SSM agent (should be pre-installed on Amazon Linux 2)

@@ -40,7 +40,7 @@ flowchart TD
         Operator["Operator Workstation"]
     end
 
-    subgraph AWS ["AWS VPC (10.0.0.0/16)"]
+    subgraph AWS ["AWS VPC"]
         subgraph PublicSubnets ["Public Subnets"]
             NAT["NAT Instance (t4g.nano)\nOutbound Egress Only"]
             IGW["Internet Gateway"]

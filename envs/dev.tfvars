@@ -6,17 +6,17 @@
 
 environment = "dev"
 
-# Deploy both workloads in dev so either pipeline can be exercised.
+# Deploy Splunk Enterprise in dev (Cribl disabled by default).
 enable_splunk = true
-enable_cribl  = true
+enable_cribl  = false
 
 # Dev is operated over the internet: public IPs + allowlisted access.
 splunk_public_access = true
 
-# Cost guardrail: stop every Project-tagged instance nightly.
-enable_auto_stop = true
+# 24/7 continuous operation: do not shut down automatically.
+enable_auto_stop = false
 
 # Credential-less start/stop from the Actions tab. Set the repository slug,
 # then flip this on.
 enable_github_summon = false
-# github_repository  = "<owner>/tf-splunk-aws"
+# github_repository  = "<owner>/tofu-splunk-aws"

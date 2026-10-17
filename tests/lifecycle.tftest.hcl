@@ -96,14 +96,14 @@ variables {
   splunk_instance_type = "t3a.small"
 }
 
-# --- enable_auto_stop defaults to true ---
+# --- enable_auto_stop defaults to false (24/7 continuous operation) ---
 
-run "auto_stop_enabled_by_default" {
+run "auto_stop_disabled_by_default" {
   command = plan
 
   assert {
-    condition     = var.enable_auto_stop == true
-    error_message = "enable_auto_stop must default to true — it is the primary cost control"
+    condition     = var.enable_auto_stop == false
+    error_message = "enable_auto_stop must default to false for 24/7 continuous operation"
   }
 }
 

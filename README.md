@@ -99,7 +99,7 @@ Estimated on-demand pricing in `us-east-2` for continuous **24/7 operation**:
 
 ---
 
-## Quickstart: How to Run Locally
+## Installation
 
 ### 1. Prerequisites
 
@@ -181,7 +181,9 @@ tofu init -backend-config=envs/dev.s3.tfbackend
 
 ---
 
-### 4. Deploy Infrastructure
+## Usage
+
+### Deploy Infrastructure
 
 ```bash
 tofu plan
@@ -197,7 +199,7 @@ tofu output access_credentials
 
 ---
 
-### 5. Accessing Splunk Web
+### Accessing Splunk Web
 
 #### Mode 1: Private Access via AWS SSM Port Forwarding (Recommended)
 

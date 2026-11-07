@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.1](https://github.com/dryvist/tofu-splunk-aws/compare/v2.1.0...v2.1.1) (2026-11-07)
+
+
+### Bug Fixes
+
+* **ci:** grant ai gate caller permissions and scan license ([9ef5624](https://github.com/dryvist/tofu-splunk-aws/commit/9ef5624a32f5e1bd77970714f980319a03294af2))
+* **ci:** update the AI merge gate caller for the v2 workflow ([#302](https://github.com/dryvist/tofu-splunk-aws/issues/302)) ([9ef5624](https://github.com/dryvist/tofu-splunk-aws/commit/9ef5624a32f5e1bd77970714f980319a03294af2))
+
 ## [2.1.0](https://github.com/dryvist/tofu-splunk-aws/compare/v2.0.3...v2.1.0) (2026-10-17)
 
 

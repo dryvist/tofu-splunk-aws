@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/dryvist/tofu-splunk-aws/compare/v2.1.1...v2.1.2) (2026-11-07)
+
+
+### Bug Fixes
+
+* **ci:** run the AI merge gate reviews on the review runner ([#304](https://github.com/dryvist/tofu-splunk-aws/issues/304)) ([1dccce7](https://github.com/dryvist/tofu-splunk-aws/commit/1dccce7a25abe276e1d3ec3866d8eb4692ff3472))
+
 ## [2.1.1](https://github.com/dryvist/tofu-splunk-aws/compare/v2.1.0...v2.1.1) (2026-11-07)
 
 

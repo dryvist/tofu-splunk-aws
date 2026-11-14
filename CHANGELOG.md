@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/dryvist/tofu-splunk-aws/compare/v2.1.2...v2.2.0) (2026-11-14)
+
+
+### Features
+
+* **agent:** zcode run j-3e5c224a438a5058 ([0b1e7f9](https://github.com/dryvist/tofu-splunk-aws/commit/0b1e7f9426d8a4ad004e7e26ee8c0ecba2278cdf))
+
 ## [2.1.2](https://github.com/dryvist/tofu-splunk-aws/compare/v2.1.1...v2.1.2) (2026-11-07)
 
 

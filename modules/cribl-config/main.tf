@@ -19,7 +19,7 @@ terraform {
   required_providers {
     criblio = {
       source                = "criblio/criblio"
-      version               = "1.25.108"
+      version               = "1.25.113"
       configuration_aliases = [criblio.onprem, criblio.cloud]
     }
   }
